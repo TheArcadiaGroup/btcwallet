@@ -10,8 +10,8 @@ import (
 	"testing"
 	"time"
 
-	"github.com/btcsuite/btcd/chaincfg"
-	_ "github.com/btcsuite/btcwallet/walletdb/bdb"
+	"github.com/TheArcadiaGroup/firod/chaincfg"
+	_ "github.com/TheArcadiaGroup/firowallet/walletdb/bdb"
 )
 
 // TestCreateWatchingOnly checks that we can construct a watching-only

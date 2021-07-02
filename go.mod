@@ -1,15 +1,15 @@
-module github.com/btcsuite/btcwallet
+module github.com/TheArcadiaGroup/firowallet
 
 require (
-	github.com/btcsuite/btcd v0.21.0-beta.0.20210426180113-7eba688b65e5
+	github.com/TheArcadiaGroup/firod v0.22.0-beta.0.20210702110135-615d55a6af67
+	github.com/TheArcadiaGroup/firoutil v1.0.3-0.20210702105910-69b409908efe
 	github.com/btcsuite/btclog v0.0.0-20170628155309-84c8d2346e9f
-	github.com/btcsuite/btcutil v1.0.3-0.20201208143702-a53e38424cce
-	github.com/btcsuite/btcutil/psbt v1.0.3-0.20201208143702-a53e38424cce
-	github.com/btcsuite/btcwallet/wallet/txauthor v1.0.0
-	github.com/btcsuite/btcwallet/wallet/txrules v1.0.0
-	github.com/btcsuite/btcwallet/wallet/txsizes v1.0.0
-	github.com/btcsuite/btcwallet/walletdb v1.3.5
-	github.com/btcsuite/btcwallet/wtxmgr v1.3.0
+	github.com/TheArcadiaGroup/firoutil/psbt v1.0.3-0.20210702105910-69b409908efe
+	github.com/TheArcadiaGroup/firowallet/wallet/txauthor v1.0.0
+	github.com/TheArcadiaGroup/firowallet/wallet/txrules v1.0.0
+	github.com/TheArcadiaGroup/firowallet/wallet/txsizes v1.0.0
+	github.com/TheArcadiaGroup/firowallet/walletdb v1.3.5
+	github.com/TheArcadiaGroup/firowallet/wtxmgr v1.3.0
 	github.com/btcsuite/websocket v0.0.0-20150119174127-31079b680792
 	github.com/davecgh/go-spew v1.1.1
 	github.com/golang/protobuf v1.4.2
@@ -26,15 +26,15 @@ require (
 	google.golang.org/grpc v1.18.0
 )
 
-replace github.com/btcsuite/btcwallet/walletdb => ./walletdb
+replace github.com/TheArcadiaGroup/firowallet/walletdb => ./walletdb
 
-replace github.com/btcsuite/btcwallet/wtxmgr => ./wtxmgr
+replace github.com/TheArcadiaGroup/firowallet/wtxmgr => ./wtxmgr
 
-replace github.com/btcsuite/btcwallet/wallet/txauthor => ./wallet/txauthor
+replace github.com/TheArcadiaGroup/firowallet/wallet/txauthor => ./wallet/txauthor
 
-replace github.com/btcsuite/btcwallet/wallet/txrules => ./wallet/txrules
+replace github.com/TheArcadiaGroup/firowallet/wallet/txrules => ./wallet/txrules
 
-replace github.com/btcsuite/btcwallet/wallet/txsizes => ./wallet/txsizes
+replace github.com/TheArcadiaGroup/firowallet/wallet/txsizes => ./wallet/txsizes
 
 // The old version of ginko that's used in btcd imports an ancient version of
 // gopkg.in/fsnotify.v1 that isn't go mod compatible. We fix that import error

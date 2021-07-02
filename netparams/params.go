@@ -5,8 +5,8 @@
 package netparams
 
 import (
-	"github.com/btcsuite/btcd/chaincfg"
-	"github.com/btcsuite/btcd/wire"
+	"github.com/TheArcadiaGroup/firod/chaincfg"
+	"github.com/TheArcadiaGroup/firod/wire"
 )
 
 // Params is used to group parameters for various networks such as the main

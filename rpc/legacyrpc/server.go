@@ -18,9 +18,9 @@ import (
 	"sync/atomic"
 	"time"
 
-	"github.com/btcsuite/btcd/btcjson"
-	"github.com/btcsuite/btcwallet/chain"
-	"github.com/btcsuite/btcwallet/wallet"
+	"github.com/TheArcadiaGroup/firod/btcjson"
+	"github.com/TheArcadiaGroup/firowallet/chain"
+	"github.com/TheArcadiaGroup/firowallet/wallet"
 	"github.com/btcsuite/websocket"
 )
 

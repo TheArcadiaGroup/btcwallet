@@ -5,15 +5,15 @@ import (
 	"fmt"
 	"sync"
 
-	"github.com/btcsuite/btcd/btcec"
-	"github.com/btcsuite/btcd/chaincfg"
-	"github.com/btcsuite/btcd/txscript"
-	"github.com/btcsuite/btcd/wire"
-	"github.com/btcsuite/btcutil"
-	"github.com/btcsuite/btcutil/hdkeychain"
-	"github.com/btcsuite/btcwallet/internal/zero"
-	"github.com/btcsuite/btcwallet/netparams"
-	"github.com/btcsuite/btcwallet/walletdb"
+	"github.com/TheArcadiaGroup/firod/btcec"
+	"github.com/TheArcadiaGroup/firod/chaincfg"
+	"github.com/TheArcadiaGroup/firod/txscript"
+	"github.com/TheArcadiaGroup/firod/wire"
+	"github.com/TheArcadiaGroup/firoutil"
+	"github.com/TheArcadiaGroup/firoutil/hdkeychain"
+	"github.com/TheArcadiaGroup/firowallet/internal/zero"
+	"github.com/TheArcadiaGroup/firowallet/netparams"
+	"github.com/TheArcadiaGroup/firowallet/walletdb"
 )
 
 // HDVersion represents the different supported schemes of hierarchical

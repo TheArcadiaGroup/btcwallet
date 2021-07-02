@@ -10,15 +10,15 @@ import (
 	"math/rand"
 	"sort"
 
-	"github.com/btcsuite/btcd/btcec"
-	"github.com/btcsuite/btcd/txscript"
-	"github.com/btcsuite/btcd/wire"
-	"github.com/btcsuite/btcutil"
-	"github.com/btcsuite/btcwallet/waddrmgr"
-	"github.com/btcsuite/btcwallet/wallet/txauthor"
-	"github.com/btcsuite/btcwallet/wallet/txsizes"
-	"github.com/btcsuite/btcwallet/walletdb"
-	"github.com/btcsuite/btcwallet/wtxmgr"
+	"github.com/TheArcadiaGroup/firod/btcec"
+	"github.com/TheArcadiaGroup/firod/txscript"
+	"github.com/TheArcadiaGroup/firod/wire"
+	"github.com/TheArcadiaGroup/firoutil"
+	"github.com/TheArcadiaGroup/firowallet/waddrmgr"
+	"github.com/TheArcadiaGroup/firowallet/wallet/txauthor"
+	"github.com/TheArcadiaGroup/firowallet/wallet/txsizes"
+	"github.com/TheArcadiaGroup/firowallet/walletdb"
+	"github.com/TheArcadiaGroup/firowallet/wtxmgr"
 )
 
 // byAmount defines the methods needed to satisify sort.Interface to

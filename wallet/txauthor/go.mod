@@ -1,14 +1,14 @@
-module github.com/btcsuite/btcwallet/wallet/txauthor
+module github.com/TheArcadiaGroup/firowallet/wallet/txauthor
 
 go 1.12
 
 require (
-	github.com/btcsuite/btcd v0.0.0-20190824003749-130ea5bddde3
-	github.com/btcsuite/btcutil v0.0.0-20190425235716-9e5f4b9a998d
-	github.com/btcsuite/btcwallet/wallet/txrules v1.0.0
-	github.com/btcsuite/btcwallet/wallet/txsizes v1.0.0
+	github.com/TheArcadiaGroup/firod v0.22.0-beta.0.20210702110135-615d55a6af67
+	github.com/TheArcadiaGroup/firoutil v1.0.3-0.20210702105910-69b409908efe
+	github.com/TheArcadiaGroup/firowallet/wallet/txrules v1.0.0
+	github.com/TheArcadiaGroup/firowallet/wallet/txsizes v1.0.0
 )
 
-replace github.com/btcsuite/btcwallet/wallet/txrules => ../txrules
+replace github.com/TheArcadiaGroup/firowallet/wallet/txrules => ../txrules
 
-replace github.com/btcsuite/btcwallet/wallet/txsizes => ../txsizes
+replace github.com/TheArcadiaGroup/firowallet/wallet/txsizes => ../txsizes

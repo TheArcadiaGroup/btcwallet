@@ -8,7 +8,7 @@ import (
 	"bufio"
 	"fmt"
 
-	"github.com/btcsuite/btcwallet/internal/legacy/keystore"
+	"github.com/TheArcadiaGroup/firowallet/internal/legacy/keystore"
 )
 
 func ProvideSeed() ([]byte, error) {

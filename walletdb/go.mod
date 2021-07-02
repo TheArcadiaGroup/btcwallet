@@ -1,4 +1,4 @@
-module github.com/btcsuite/btcwallet/walletdb
+module github.com/TheArcadiaGroup/firowallet/walletdb
 
 go 1.12
 

@@ -11,10 +11,10 @@ import (
 	"path/filepath"
 	"time"
 
-	"github.com/btcsuite/btcutil"
-	"github.com/btcsuite/btcwallet/wallet"
-	"github.com/btcsuite/btcwallet/walletdb"
-	_ "github.com/btcsuite/btcwallet/walletdb/bdb"
+	"github.com/TheArcadiaGroup/firoutil"
+	"github.com/TheArcadiaGroup/firowallet/wallet"
+	"github.com/TheArcadiaGroup/firowallet/walletdb"
+	_ "github.com/TheArcadiaGroup/firowallet/walletdb/bdb"
 	"github.com/jessevdk/go-flags"
 )
 

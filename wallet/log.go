@@ -5,10 +5,10 @@
 package wallet
 
 import (
+	"github.com/TheArcadiaGroup/firowallet/waddrmgr"
+	"github.com/TheArcadiaGroup/firowallet/walletdb/migration"
+	"github.com/TheArcadiaGroup/firowallet/wtxmgr"
 	"github.com/btcsuite/btclog"
-	"github.com/btcsuite/btcwallet/waddrmgr"
-	"github.com/btcsuite/btcwallet/walletdb/migration"
-	"github.com/btcsuite/btcwallet/wtxmgr"
 )
 
 // log is a logger that is initialized with no output filters.  This
