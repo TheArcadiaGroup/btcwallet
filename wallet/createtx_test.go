@@ -76,7 +76,7 @@ func TestTxToOutputsDryRun(t *testing.T) {
 	// First do a few dry-runs, making sure the number of addresses in the
 	// database us not inflated.
 	dryRunTx, err := w.txToOutputs(
-		txOuts, nil, 0, 1, 1000, CoinSelectionLargest, true,
+		txOuts, nil, 0, 1, 1000, true,
 	)
 	if err != nil {
 		t.Fatalf("unable to author tx: %v", err)
@@ -93,7 +93,7 @@ func TestTxToOutputsDryRun(t *testing.T) {
 	}
 
 	dryRunTx2, err := w.txToOutputs(
-		txOuts, nil, 0, 1, 1000, CoinSelectionLargest, true,
+		txOuts, nil, 0, 1, 1000, true,
 	)
 	if err != nil {
 		t.Fatalf("unable to author tx: %v", err)
@@ -128,7 +128,7 @@ func TestTxToOutputsDryRun(t *testing.T) {
 	// Now we do a proper, non-dry run. This should add a change address
 	// to the database.
 	tx, err := w.txToOutputs(
-		txOuts, nil, 0, 1, 1000, CoinSelectionLargest, false,
+		txOuts, nil, 0, 1, 1000, false,
 	)
 	if err != nil {
 		t.Fatalf("unable to author tx: %v", err)
@@ -273,7 +273,7 @@ func TestTxToOutputsRandom(t *testing.T) {
 
 	createTx := func() *txauthor.AuthoredTx {
 		tx, err := w.txToOutputs(
-			txOuts, nil, 0, 1, feeSatPerKb, CoinSelectionRandom, true,
+			txOuts, nil, 0, 1, feeSatPerKb, true,
 		)
 		require.NoError(t, err)
 		return tx

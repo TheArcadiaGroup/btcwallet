@@ -6,8 +6,6 @@ import (
 	"testing"
 
 	"github.com/TheArcadiaGroup/firod/chaincfg"
-	"github.com/TheArcadiaGroup/firod/txscript"
-	"github.com/TheArcadiaGroup/firoutil"
 	"github.com/TheArcadiaGroup/firoutil/hdkeychain"
 	"github.com/TheArcadiaGroup/firowallet/waddrmgr"
 	"github.com/stretchr/testify/require"
@@ -257,33 +255,33 @@ func testImportAccount(t *testing.T, w *Wallet, tc *testCase, watchOnly bool,
 	_, err = w.DumpWIFPrivateKey(intAddr)
 	require.True(t, waddrmgr.IsError(err, waddrmgr.ErrWatchingOnly))
 
-	// Get the address info for the single key we imported.
-	switch tc.addrType {
-	case waddrmgr.NestedWitnessPubKey:
-		witnessAddr, err := btcutil.NewAddressWitnessPubKeyHash(
-			btcutil.Hash160(acct3ExternalPub.SerializeCompressed()),
-			&chaincfg.TestNet3Params,
-		)
-		require.NoError(t, err)
+	// // Get the address info for the single key we imported.
+	// switch tc.addrType {
+	// case waddrmgr.NestedWitnessPubKey:
+	// 	witnessAddr, err := btcutil.NewAddressWitnessPubKeyHash(
+	// 		btcutil.Hash160(acct3ExternalPub.SerializeCompressed()),
+	// 		&chaincfg.TestNet3Params,
+	// 	)
+	// 	require.NoError(t, err)
 
-		witnessProg, err := txscript.PayToAddrScript(witnessAddr)
-		require.NoError(t, err)
+	// 	witnessProg, err := txscript.PayToAddrScript(witnessAddr)
+	// 	require.NoError(t, err)
 
-		intAddr, err = btcutil.NewAddressScriptHash(
-			witnessProg, &chaincfg.TestNet3Params,
-		)
-		require.NoError(t, err)
+	// 	intAddr, err = btcutil.NewAddressScriptHash(
+	// 		witnessProg, &chaincfg.TestNet3Params,
+	// 	)
+	// 	require.NoError(t, err)
 
-	case waddrmgr.WitnessPubKey:
-		intAddr, err = btcutil.NewAddressWitnessPubKeyHash(
-			btcutil.Hash160(acct3ExternalPub.SerializeCompressed()),
-			&chaincfg.TestNet3Params,
-		)
-		require.NoError(t, err)
+	// case waddrmgr.WitnessPubKey:
+	// 	intAddr, err = btcutil.NewAddressWitnessPubKeyHash(
+	// 		btcutil.Hash160(acct3ExternalPub.SerializeCompressed()),
+	// 		&chaincfg.TestNet3Params,
+	// 	)
+	// 	require.NoError(t, err)
 
-	default:
-		t.Fatalf("unhandled address type %v", tc.addrType)
-	}
+	// default:
+	// 	t.Fatalf("unhandled address type %v", tc.addrType)
+	// }
 
 	addrManaged, err := w.AddressInfo(intAddr)
 	require.NoError(t, err)

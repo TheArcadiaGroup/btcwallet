@@ -7,7 +7,6 @@ import (
 
 	"github.com/TheArcadiaGroup/firod/btcec"
 	"github.com/TheArcadiaGroup/firod/chaincfg"
-	"github.com/TheArcadiaGroup/firod/txscript"
 	"github.com/TheArcadiaGroup/firod/wire"
 	"github.com/TheArcadiaGroup/firoutil"
 	"github.com/TheArcadiaGroup/firoutil/hdkeychain"
@@ -1809,22 +1808,22 @@ func (s *ScopedKeyManager) importPublicKey(ns walletdb.ReadWriteBucket,
 	// Compute the addressID for our key based on its address type.
 	var addressID []byte
 	switch addrType {
-	case PubKeyHash, WitnessPubKey:
+	case PubKeyHash:
 		addressID = btcutil.Hash160(serializedPubKey)
 
-	case NestedWitnessPubKey:
-		pubKeyHash := btcutil.Hash160(serializedPubKey)
-		p2wkhAddr, err := btcutil.NewAddressWitnessPubKeyHash(
-			pubKeyHash, s.rootManager.chainParams,
-		)
-		if err != nil {
-			return err
-		}
-		witnessScript, err := txscript.PayToAddrScript(p2wkhAddr)
-		if err != nil {
-			return err
-		}
-		addressID = btcutil.Hash160(witnessScript)
+	// case NestedWitnessPubKey:
+	// 	pubKeyHash := btcutil.Hash160(serializedPubKey)
+	// 	p2wkhAddr, err := btcutil.NewAddressWitnessPubKeyHash(
+	// 		pubKeyHash, s.rootManager.chainParams,
+	// 	)
+	// 	if err != nil {
+	// 		return err
+	// 	}
+	// 	witnessScript, err := txscript.PayToAddrScript(p2wkhAddr)
+	// 	if err != nil {
+	// 		return err
+	// 	}
+	// 	addressID = btcutil.Hash160(witnessScript)
 
 	default:
 		return fmt.Errorf("unsupported address type %v", addrType)

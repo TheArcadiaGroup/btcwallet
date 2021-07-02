@@ -1271,7 +1271,7 @@ func (c *BitcoindClient) filterTx(tx *wire.MsgTx,
 		// watch list encoded as an address. To do so, we'll re-derive
 		// the pkScript of the output the input is attempting to spend.
 		pkScript, err := txscript.ComputePkScript(
-			txIn.SignatureScript, txIn.Witness,
+			txIn.SignatureScript,
 		)
 		if err != nil {
 			// Non-standard outputs can be safely skipped.

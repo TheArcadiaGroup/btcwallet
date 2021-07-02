@@ -10,7 +10,6 @@ import (
 	"github.com/TheArcadiaGroup/firod/btcec"
 	"github.com/TheArcadiaGroup/firod/txscript"
 	"github.com/TheArcadiaGroup/firod/wire"
-	"github.com/TheArcadiaGroup/firoutil"
 	"github.com/TheArcadiaGroup/firowallet/waddrmgr"
 )
 
@@ -38,43 +37,43 @@ func (w *Wallet) scriptForOutput(output *wire.TxOut) (
 		sigScript      []byte
 	)
 
-	switch {
-	// If we're spending p2wkh output nested within a p2sh output, then
-	// we'll need to attach a sigScript in addition to witness data.
-	case walletAddr.AddrType() == waddrmgr.NestedWitnessPubKey:
-		pubKey := pubKeyAddr.PubKey()
-		pubKeyHash := btcutil.Hash160(pubKey.SerializeCompressed())
+	// switch {
+	// // If we're spending p2wkh output nested within a p2sh output, then
+	// // we'll need to attach a sigScript in addition to witness data.
+	// case walletAddr.AddrType() == waddrmgr.NestedWitnessPubKey:
+	// 	pubKey := pubKeyAddr.PubKey()
+	// 	pubKeyHash := btcutil.Hash160(pubKey.SerializeCompressed())
 
-		// Next, we'll generate a valid sigScript that will allow us to
-		// spend the p2sh output. The sigScript will contain only a
-		// single push of the p2wkh witness program corresponding to
-		// the matching public key of this address.
-		p2wkhAddr, err := btcutil.NewAddressWitnessPubKeyHash(
-			pubKeyHash, w.chainParams,
-		)
-		if err != nil {
-			return nil, nil, nil, err
-		}
-		witnessProgram, err = txscript.PayToAddrScript(p2wkhAddr)
-		if err != nil {
-			return nil, nil, nil, err
-		}
+	// 	// Next, we'll generate a valid sigScript that will allow us to
+	// 	// spend the p2sh output. The sigScript will contain only a
+	// 	// single push of the p2wkh witness program corresponding to
+	// 	// the matching public key of this address.
+	// 	p2wkhAddr, err := btcutil.NewAddressWitnessPubKeyHash(
+	// 		pubKeyHash, w.chainParams,
+	// 	)
+	// 	if err != nil {
+	// 		return nil, nil, nil, err
+	// 	}
+	// 	witnessProgram, err = txscript.PayToAddrScript(p2wkhAddr)
+	// 	if err != nil {
+	// 		return nil, nil, nil, err
+	// 	}
 
-		bldr := txscript.NewScriptBuilder()
-		bldr.AddData(witnessProgram)
-		sigScript, err = bldr.Script()
-		if err != nil {
-			return nil, nil, nil, err
-		}
+	// 	bldr := txscript.NewScriptBuilder()
+	// 	bldr.AddData(witnessProgram)
+	// 	sigScript, err = bldr.Script()
+	// 	if err != nil {
+	// 		return nil, nil, nil, err
+	// 	}
 
-	// Otherwise, this is a regular p2wkh output, so we include the
-	// witness program itself as the subscript to generate the proper
-	// sighash digest. As part of the new sighash digest algorithm, the
-	// p2wkh witness program will be expanded into a regular p2kh
-	// script.
-	default:
-		witnessProgram = output.PkScript
-	}
+	// // Otherwise, this is a regular p2wkh output, so we include the
+	// // witness program itself as the subscript to generate the proper
+	// // sighash digest. As part of the new sighash digest algorithm, the
+	// // p2wkh witness program will be expanded into a regular p2kh
+	// // script.
+	// default:
+	// 	witnessProgram = output.PkScript
+	// }
 
 	return pubKeyAddr, witnessProgram, sigScript, nil
 }

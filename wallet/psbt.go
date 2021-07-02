@@ -41,8 +41,7 @@ import (
 // selected/validated inputs by this method. It is in the caller's
 // responsibility to lock the inputs before handing the partial transaction out.
 func (w *Wallet) FundPsbt(packet *psbt.Packet, keyScope *waddrmgr.KeyScope,
-	account uint32, feeSatPerKB btcutil.Amount,
-	coinSelectionStrategy CoinSelectionStrategy) (int32, error) {
+	account uint32, feeSatPerKB btcutil.Amount) (int32, error) {
 
 	// Make sure the packet is well formed. We only require there to be at
 	// least one output but not necessarily any inputs.
@@ -106,7 +105,7 @@ func (w *Wallet) FundPsbt(packet *psbt.Packet, keyScope *waddrmgr.KeyScope,
 
 			// We don't want to include the witness or any script
 			// on the unsigned TX just yet.
-			packet.UnsignedTx.TxIn[idx].Witness = wire.TxWitness{}
+			// packet.UnsignedTx.TxIn[idx].Witness = wire.TxWitness{}
 			packet.UnsignedTx.TxIn[idx].SignatureScript = nil
 
 			// For nested P2WKH we need to add the redeem script to
@@ -134,7 +133,7 @@ func (w *Wallet) FundPsbt(packet *psbt.Packet, keyScope *waddrmgr.KeyScope,
 		// change address creation.
 		tx, err = w.CreateSimpleTx(
 			keyScope, account, packet.UnsignedTx.TxOut, 1,
-			feeSatPerKB, coinSelectionStrategy, false,
+			feeSatPerKB, false,
 		)
 		if err != nil {
 			return 0, fmt.Errorf("error creating funding TX: %v",
@@ -186,16 +185,39 @@ func (w *Wallet) FundPsbt(packet *psbt.Packet, keyScope *waddrmgr.KeyScope,
 		if err != nil {
 			return 0, err
 		}
-		_, changeSource, err := w.addrMgrWithChangeSource(
-			dbtx, keyScope, account,
-		)
-		if err != nil {
-			return 0, err
-		}
+		// _, changeSource, err := w.addrMgrWithChangeSource(
+		// 	dbtx, keyScope, account,
+		// )
+		// if err != nil {
+		// 	return 0, err
+		// }
 
 		// Ask the txauthor to create a transaction with our selected
 		// coins. This will perform fee estimation and add a change
 		// output if necessary.
+		addrmgrNs := dbtx.ReadWriteBucket(waddrmgrNamespaceKey)
+		changeSource := func() ([]byte, error) {
+			// Derive the change output script. We'll use the default key
+			// scope responsible for P2WPKH addresses to do so. As a hack to
+			// allow spending from the imported account, change addresses
+			// are created from account 0.
+			var changeAddr btcutil.Address
+			var err error
+			changeKeyScope := waddrmgr.KeyScopeBIP0084
+			if account == waddrmgr.ImportedAddrAccount {
+				changeAddr, err = w.newChangeAddress(
+					addrmgrNs, 0, changeKeyScope,
+				)
+			} else {
+				changeAddr, err = w.newChangeAddress(
+					addrmgrNs, account, changeKeyScope,
+				)
+			}
+			if err != nil {
+				return nil, err
+			}
+			return txscript.PayToAddrScript(changeAddr)
+		}
 		tx, err = txauthor.NewUnsignedTransaction(
 			txOut, feeSatPerKB, inputSource, changeSource,
 		)

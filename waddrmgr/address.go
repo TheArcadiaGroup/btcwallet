@@ -10,7 +10,6 @@ import (
 	"sync"
 
 	"github.com/TheArcadiaGroup/firod/btcec"
-	"github.com/TheArcadiaGroup/firod/txscript"
 	"github.com/TheArcadiaGroup/firoutil"
 	"github.com/TheArcadiaGroup/firoutil/hdkeychain"
 	"github.com/TheArcadiaGroup/firowallet/internal/zero"
@@ -217,8 +216,8 @@ func (a *managedAddress) AddrHash() []byte {
 		hash = n.Hash160()[:]
 	case *btcutil.AddressScriptHash:
 		hash = n.Hash160()[:]
-	case *btcutil.AddressWitnessPubKeyHash:
-		hash = n.Hash160()[:]
+		// case *btcutil.AddressWitnessPubKeyHash:
+		// 	hash = n.Hash160()[:]
 	}
 
 	return hash
@@ -363,37 +362,37 @@ func newManagedAddressWithoutPrivKey(m *ScopedKeyManager,
 
 	switch addrType {
 
-	case NestedWitnessPubKey:
-		// For this address type we'l generate an address which is
-		// backwards compatible to Bitcoin nodes running 0.6.0 onwards, but
-		// allows us to take advantage of segwit's scripting improvements,
-		// and malleability fixes.
+	// case NestedWitnessPubKey:
+	// 	// For this address type we'l generate an address which is
+	// 	// backwards compatible to Bitcoin nodes running 0.6.0 onwards, but
+	// 	// allows us to take advantage of segwit's scripting improvements,
+	// 	// and malleability fixes.
 
-		// First, we'll generate a normal p2wkh address from the pubkey hash.
-		witAddr, err := btcutil.NewAddressWitnessPubKeyHash(
-			pubKeyHash, m.rootManager.chainParams,
-		)
-		if err != nil {
-			return nil, err
-		}
+	// 	// First, we'll generate a normal p2wkh address from the pubkey hash.
+	// 	witAddr, err := btcutil.NewAddressWitnessPubKeyHash(
+	// 		pubKeyHash, m.rootManager.chainParams,
+	// 	)
+	// 	if err != nil {
+	// 		return nil, err
+	// 	}
 
-		// Next we'll generate the witness program which can be used as a
-		// pkScript to pay to this generated address.
-		witnessProgram, err := txscript.PayToAddrScript(witAddr)
-		if err != nil {
-			return nil, err
-		}
+	// 	// Next we'll generate the witness program which can be used as a
+	// 	// pkScript to pay to this generated address.
+	// 	witnessProgram, err := txscript.PayToAddrScript(witAddr)
+	// 	if err != nil {
+	// 		return nil, err
+	// 	}
 
-		// Finally, we'll use the witness program itself as the pre-image
-		// to a p2sh address. In order to spend, we first use the
-		// witnessProgram as the sigScript, then present the proper
-		// <sig, pubkey> pair as the witness.
-		address, err = btcutil.NewAddressScriptHash(
-			witnessProgram, m.rootManager.chainParams,
-		)
-		if err != nil {
-			return nil, err
-		}
+	// 	// Finally, we'll use the witness program itself as the pre-image
+	// 	// to a p2sh address. In order to spend, we first use the
+	// 	// witnessProgram as the sigScript, then present the proper
+	// 	// <sig, pubkey> pair as the witness.
+	// 	address, err = btcutil.NewAddressScriptHash(
+	// 		witnessProgram, m.rootManager.chainParams,
+	// 	)
+	// 	if err != nil {
+	// 		return nil, err
+	// 	}
 
 	case PubKeyHash:
 		address, err = btcutil.NewAddressPubKeyHash(
@@ -403,13 +402,13 @@ func newManagedAddressWithoutPrivKey(m *ScopedKeyManager,
 			return nil, err
 		}
 
-	case WitnessPubKey:
-		address, err = btcutil.NewAddressWitnessPubKeyHash(
-			pubKeyHash, m.rootManager.chainParams,
-		)
-		if err != nil {
-			return nil, err
-		}
+		// case WitnessPubKey:
+		// 	address, err = btcutil.NewAddressWitnessPubKeyHash(
+		// 		pubKeyHash, m.rootManager.chainParams,
+		// 	)
+		// 	if err != nil {
+		// 		return nil, err
+		// 	}
 	}
 
 	return &managedAddress{

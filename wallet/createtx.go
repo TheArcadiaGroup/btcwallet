@@ -7,8 +7,6 @@ package wallet
 
 import (
 	"fmt"
-	"math/rand"
-	"sort"
 
 	"github.com/TheArcadiaGroup/firod/btcec"
 	"github.com/TheArcadiaGroup/firod/txscript"
@@ -107,8 +105,7 @@ func (s secretSource) GetScript(addr btcutil.Address) ([]byte, error) {
 // the database. A tx created with this set to true will intentionally have no
 // input scripts added and SHOULD NOT be broadcasted.
 func (w *Wallet) txToOutputs(outputs []*wire.TxOut, keyScope *waddrmgr.KeyScope,
-	account uint32, minconf int32, feeSatPerKb btcutil.Amount,
-	coinSelectionStrategy CoinSelectionStrategy, dryRun bool) (
+	account uint32, minconf int32, feeSatPerKb btcutil.Amount, dryRun bool) (
 	tx *txauthor.AuthoredTx, err error) {
 
 	chainClient, err := w.requireChainClient()
@@ -122,12 +119,14 @@ func (w *Wallet) txToOutputs(outputs []*wire.TxOut, keyScope *waddrmgr.KeyScope,
 	}
 	defer func() { _ = dbtx.Rollback() }()
 
-	addrmgrNs, changeSource, err := w.addrMgrWithChangeSource(
-		dbtx, keyScope, account,
-	)
-	if err != nil {
-		return nil, err
-	}
+	// addrmgrNs, changeSource, err := w.addrMgrWithChangeSource(
+	// 	dbtx, keyScope, account,
+	// )
+	// if err != nil {
+	// 	return nil, err
+	// }
+
+	addrmgrNs := dbtx.ReadWriteBucket(waddrmgrNamespaceKey)
 
 	// Get current block's height and hash.
 	bs, err := chainClient.BlockStamp()
@@ -142,36 +141,28 @@ func (w *Wallet) txToOutputs(outputs []*wire.TxOut, keyScope *waddrmgr.KeyScope,
 		return nil, err
 	}
 
-	var inputSource txauthor.InputSource
-
-	switch coinSelectionStrategy {
-	// Pick largest outputs first.
-	case CoinSelectionLargest:
-		sort.Sort(sort.Reverse(byAmount(eligible)))
-		inputSource = makeInputSource(eligible)
-
-	// Select coins at random. This prevents the creation of ever smaller
-	// utxos over time that may never become economical to spend.
-	case CoinSelectionRandom:
-		// Skip inputs that do not raise the total transaction output
-		// value at the requested fee rate.
-		var positivelyYielding []wtxmgr.Credit
-		for _, output := range eligible {
-			output := output
-
-			if !inputYieldsPositively(&output, feeSatPerKb) {
-				continue
-			}
-
-			positivelyYielding = append(positivelyYielding, output)
+	inputSource := makeInputSource(eligible)
+	changeSource := func() ([]byte, error) {
+		// Derive the change output script. We'll use the default key
+		// scope responsible for P2WPKH addresses to do so. As a hack to
+		// allow spending from the imported account, change addresses
+		// are created from account 0.
+		var changeAddr btcutil.Address
+		var err error
+		changeKeyScope := waddrmgr.KeyScopeBIP0084
+		if account == waddrmgr.ImportedAddrAccount {
+			changeAddr, err = w.newChangeAddress(
+				addrmgrNs, 0, changeKeyScope,
+			)
+		} else {
+			changeAddr, err = w.newChangeAddress(
+				addrmgrNs, account, changeKeyScope,
+			)
 		}
-
-		rand.Shuffle(len(positivelyYielding), func(i, j int) {
-			positivelyYielding[i], positivelyYielding[j] =
-				positivelyYielding[j], positivelyYielding[i]
-		})
-
-		inputSource = makeInputSource(positivelyYielding)
+		if err != nil {
+			return nil, err
+		}
+		return txscript.PayToAddrScript(changeAddr)
 	}
 
 	tx, err = txauthor.NewUnsignedTransaction(
@@ -332,75 +323,75 @@ func inputYieldsPositively(credit *wtxmgr.Credit, feeRatePerKb btcutil.Amount) b
 	return inputFee < credit.Amount
 }
 
-// addrMgrWithChangeSource returns the address manager bucket and a change
-// source that returns change addresses from said address manager. The change
-// addresses will come from the specified key scope and account, unless a key
-// scope is not specified. In that case, change addresses will always come from
-// the P2WKH key scope.
-func (w *Wallet) addrMgrWithChangeSource(dbtx walletdb.ReadWriteTx,
-	changeKeyScope *waddrmgr.KeyScope, account uint32) (
-	walletdb.ReadWriteBucket, *txauthor.ChangeSource, error) {
+// // addrMgrWithChangeSource returns the address manager bucket and a change
+// // source that returns change addresses from said address manager. The change
+// // addresses will come from the specified key scope and account, unless a key
+// // scope is not specified. In that case, change addresses will always come from
+// // the P2WKH key scope.
+// func (w *Wallet) addrMgrWithChangeSource(dbtx walletdb.ReadWriteTx,
+// 	changeKeyScope *waddrmgr.KeyScope, account uint32) (
+// 	walletdb.ReadWriteBucket, *txauthor.ChangeSource, error) {
 
-	// Determine the address type for change addresses of the given account.
-	if changeKeyScope == nil {
-		changeKeyScope = &waddrmgr.KeyScopeBIP0084
-	}
-	addrType := waddrmgr.ScopeAddrMap[*changeKeyScope].InternalAddrType
+// 	// Determine the address type for change addresses of the given account.
+// 	if changeKeyScope == nil {
+// 		changeKeyScope = &waddrmgr.KeyScopeBIP0084
+// 	}
+// 	addrType := waddrmgr.ScopeAddrMap[*changeKeyScope].InternalAddrType
 
-	// It's possible for the account to have an address schema override, so
-	// prefer that if it exists.
-	addrmgrNs := dbtx.ReadWriteBucket(waddrmgrNamespaceKey)
-	scopeMgr, err := w.Manager.FetchScopedKeyManager(*changeKeyScope)
-	if err != nil {
-		return nil, nil, err
-	}
-	accountInfo, err := scopeMgr.AccountProperties(addrmgrNs, account)
-	if err != nil {
-		return nil, nil, err
-	}
-	if accountInfo.AddrSchema != nil {
-		addrType = accountInfo.AddrSchema.InternalAddrType
-	}
+// 	// It's possible for the account to have an address schema override, so
+// 	// prefer that if it exists.
+// 	addrmgrNs := dbtx.ReadWriteBucket(waddrmgrNamespaceKey)
+// 	scopeMgr, err := w.Manager.FetchScopedKeyManager(*changeKeyScope)
+// 	if err != nil {
+// 		return nil, nil, err
+// 	}
+// 	accountInfo, err := scopeMgr.AccountProperties(addrmgrNs, account)
+// 	if err != nil {
+// 		return nil, nil, err
+// 	}
+// 	if accountInfo.AddrSchema != nil {
+// 		addrType = accountInfo.AddrSchema.InternalAddrType
+// 	}
 
-	// Compute the expected size of the script for the change address type.
-	var scriptSize int
-	switch addrType {
-	case waddrmgr.PubKeyHash:
-		scriptSize = txsizes.P2PKHPkScriptSize
-	case waddrmgr.NestedWitnessPubKey:
-		scriptSize = txsizes.NestedP2WPKHPkScriptSize
-	case waddrmgr.WitnessPubKey:
-		scriptSize = txsizes.P2WPKHPkScriptSize
-	}
+// 	// Compute the expected size of the script for the change address type.
+// 	var scriptSize int
+// 	switch addrType {
+// 	case waddrmgr.PubKeyHash:
+// 		scriptSize = txsizes.P2PKHPkScriptSize
+// 	case waddrmgr.NestedWitnessPubKey:
+// 		scriptSize = txsizes.NestedP2WPKHPkScriptSize
+// 	case waddrmgr.WitnessPubKey:
+// 		scriptSize = txsizes.P2WPKHPkScriptSize
+// 	}
 
-	newChangeScript := func() ([]byte, error) {
-		// Derive the change output script. As a hack to allow spending
-		// from the imported account, change addresses are created from
-		// account 0.
-		var (
-			changeAddr btcutil.Address
-			err        error
-		)
-		if account == waddrmgr.ImportedAddrAccount {
-			changeAddr, err = w.newChangeAddress(
-				addrmgrNs, 0, *changeKeyScope,
-			)
-		} else {
-			changeAddr, err = w.newChangeAddress(
-				addrmgrNs, account, *changeKeyScope,
-			)
-		}
-		if err != nil {
-			return nil, err
-		}
-		return txscript.PayToAddrScript(changeAddr)
-	}
+// 	newChangeScript := func() ([]byte, error) {
+// 		// Derive the change output script. As a hack to allow spending
+// 		// from the imported account, change addresses are created from
+// 		// account 0.
+// 		var (
+// 			changeAddr btcutil.Address
+// 			err        error
+// 		)
+// 		if account == waddrmgr.ImportedAddrAccount {
+// 			changeAddr, err = w.newChangeAddress(
+// 				addrmgrNs, 0, *changeKeyScope,
+// 			)
+// 		} else {
+// 			changeAddr, err = w.newChangeAddress(
+// 				addrmgrNs, account, *changeKeyScope,
+// 			)
+// 		}
+// 		if err != nil {
+// 			return nil, err
+// 		}
+// 		return txscript.PayToAddrScript(changeAddr)
+// 	}
 
-	return addrmgrNs, &txauthor.ChangeSource{
-		ScriptSize: scriptSize,
-		NewScript:  newChangeScript,
-	}, nil
-}
+// 	return addrmgrNs, &txauthor.ChangeSource{
+// 		ScriptSize: scriptSize,
+// 		NewScript:  newChangeScript,
+// 	}, nil
+// }
 
 // validateMsgTx verifies transaction input scripts for tx.  All previous output
 // scripts from outputs redeemed by the transaction, in the same order they are

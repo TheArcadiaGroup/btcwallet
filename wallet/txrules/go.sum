@@ -1,16 +1,9 @@
-github.com/TheArcadiaGroup/firod v0.0.0-20190824003749-130ea5bddde3 h1:A/EVblehb75cUgXA5njHPn0kLAsykn6mJGz7rnmW5W0=
-github.com/TheArcadiaGroup/firod v0.0.0-20190824003749-130ea5bddde3/go.mod h1:3J08xEfcugPacsc34/LKRU2yO7YmuT8yt28J8k2+rrI=
 github.com/TheArcadiaGroup/firod v0.22.0-beta.0.20210702094717-0fc61c29a141/go.mod h1:teWJhiUhmoR05xwFobdTqj3LcY168m0uFxFUmmuK7Ns=
 github.com/TheArcadiaGroup/firod v0.22.0-beta.0.20210702100159-320e004d33db/go.mod h1:6NLGUfJJgWhQuwIyOhoE5O+KZ60RddplJ6z5X5HwEcs=
-github.com/TheArcadiaGroup/firod v0.22.0-beta.0.20210702100911-391fdc054057 h1:Ne7MOIGMVonG1+4JE5nFWjbuSomLhY3BzGgL5CfoUWU=
-github.com/TheArcadiaGroup/firod v0.22.0-beta.0.20210702100911-391fdc054057/go.mod h1:0g7VVDXtEDUZ9heVLsEQ3637M5eX488UiHQLU6AOHHo=
 github.com/TheArcadiaGroup/firod v0.22.0-beta.0.20210702104942-50834b9555de/go.mod h1:0g7VVDXtEDUZ9heVLsEQ3637M5eX488UiHQLU6AOHHo=
 github.com/TheArcadiaGroup/firod v0.22.0-beta.0.20210702110135-615d55a6af67 h1:W3og0NtHbpdISXS5Iofb3+Mbkv+0eO9PrdyACr6DlXw=
 github.com/TheArcadiaGroup/firod v0.22.0-beta.0.20210702110135-615d55a6af67/go.mod h1:c37N6EcRuIC0ad6R+rJ6D7fPtjPuhioJBhW+XLWFnrA=
-github.com/TheArcadiaGroup/firoutil v0.0.0-20190425235716-9e5f4b9a998d h1:yJzD/yFppdVCf6ApMkVy8cUxV0XrxdP9rVf6D87/Mng=
-github.com/TheArcadiaGroup/firoutil v0.0.0-20190425235716-9e5f4b9a998d/go.mod h1:+5NJ2+qvTyV9exUAL/rxXi3DcLg2Ts+ymUAY5y4NvMg=
 github.com/TheArcadiaGroup/firoutil v1.0.3-0.20210702095605-a0d7cd6d467d/go.mod h1:onyUUPeRVZYIUrBQWowrYMfZ1FJahm8BL1SoBMJUKmU=
-github.com/TheArcadiaGroup/firoutil v1.0.3-0.20210702100639-9a4ce93bc530 h1:Tcy+GIV0MzcKft7DSApJKCUvQwnWif+gmm8AQX5g+70=
 github.com/TheArcadiaGroup/firoutil v1.0.3-0.20210702100639-9a4ce93bc530/go.mod h1:2UnpqqQeSkcrhORV3NmVMN9bRbJPxclVoM+8LN2BQQ8=
 github.com/TheArcadiaGroup/firoutil v1.0.3-0.20210702105910-69b409908efe h1:ql61aGcxd86SCq0d+jjkaZy0lt5TvmaCAHCefOA4hag=
 github.com/TheArcadiaGroup/firoutil v1.0.3-0.20210702105910-69b409908efe/go.mod h1:O6x2qmYfYMQZ4nRmEQ2yZWgkZU4OCIhDK1v14YhTMeA=
@@ -27,9 +20,9 @@ github.com/btcsuite/snappy-go v0.0.0-20151229074030-0bdef8d06723/go.mod h1:8woku
 github.com/btcsuite/snappy-go v1.0.0/go.mod h1:8woku9dyThutzjeg+3xrA5iCpBRH8XEEg3lh6TiUghc=
 github.com/btcsuite/websocket v0.0.0-20150119174127-31079b680792/go.mod h1:ghJtEyQwv5/p4Mg4C0fgbePVuGr935/5ddU9Z3TmDRY=
 github.com/btcsuite/winsvc v1.0.0/go.mod h1:jsenWakMcC0zFBFurPLEAyrnc/teJEM1O46fmI40EZs=
-github.com/davecgh/go-spew v0.0.0-20171005155431-ecdeabc65495 h1:6IyqGr3fnd0tM3YxipK27TUskaOVUjU2nG45yzwcQKY=
 github.com/davecgh/go-spew v0.0.0-20171005155431-ecdeabc65495/go.mod h1:J7Y8YcW2NihsgmVo/mv3lAwl/skON4iLHjSsI+c5H38=
 github.com/davecgh/go-spew v1.1.0/go.mod h1:J7Y8YcW2NihsgmVo/mv3lAwl/skON4iLHjSsI+c5H38=
+github.com/davecgh/go-spew v1.1.1 h1:vj9j/u1bqnvCEfJOwUhtlOARqs3+rkHYY13jYWTU97c=
 github.com/davecgh/go-spew v1.1.1/go.mod h1:J7Y8YcW2NihsgmVo/mv3lAwl/skON4iLHjSsI+c5H38=
 github.com/decred/dcrd/lru v1.0.0/go.mod h1:mxKOwFd7lFjN2GZYsiz/ecgqR6kkYAl+0pz0tEMk218=
 github.com/fsnotify/fsnotify v1.4.7/go.mod h1:jwhsz4b93w/PPRr/qN1Yymfu8t87LnFCMoQvtojpjFo=
@@ -43,7 +36,6 @@ github.com/onsi/ginkgo v1.6.0/go.mod h1:lLunBs/Ym6LB5Z9jYTR76FiuTmxDTDusOGeTQH+W
 github.com/onsi/ginkgo v1.7.0/go.mod h1:lLunBs/Ym6LB5Z9jYTR76FiuTmxDTDusOGeTQH+WWjE=
 github.com/onsi/gomega v1.4.1/go.mod h1:C1qb7wdrVGGVU+Z6iS04AVkA3Q65CEZX59MT0QO5uiA=
 github.com/onsi/gomega v1.4.3/go.mod h1:ex+gbHU/CVuBBDIJjb2X0qEXbFg53c61hWP/1CpauHY=
-golang.org/x/crypto v0.0.0-20170930174604-9419663f5a44 h1:9lP3x0pW80sDI6t1UMSLA4to18W7R7imwAI/sWS9S8Q=
 golang.org/x/crypto v0.0.0-20170930174604-9419663f5a44/go.mod h1:6SG95UA2DQfeDnfUPMdvaQW0Q7yPrPDi9nlGo2tz2b4=
 golang.org/x/crypto v0.0.0-20190308221718-c2843e01d9a2/go.mod h1:djNgcEr1/C05ACkg1iLfiJU5Ep61QUkGW8qpdssI0+w=
 golang.org/x/crypto v0.0.0-20200115085410-6d4e4cb37c7d/go.mod h1:LzIPMQfyMNhhGPhUkYOs5KpL4U8rLKemX1yGLhDgUto=
