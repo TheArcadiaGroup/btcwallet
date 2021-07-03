@@ -5,8 +5,8 @@ github.com/TheArcadiaGroup/firod v0.22.0-beta.0.20210702104942-50834b9555de/go.m
 github.com/TheArcadiaGroup/firod v0.22.0-beta.0.20210702123230-c2e808e80092/go.mod h1:c37N6EcRuIC0ad6R+rJ6D7fPtjPuhioJBhW+XLWFnrA=
 github.com/TheArcadiaGroup/firod v0.22.0-beta.0.20210703102553-04e82d2a986a h1:2ndFH0cN59aKflQZ3n9IkDExORuOyTYgQCURKYRC+is=
 github.com/TheArcadiaGroup/firod v0.22.0-beta.0.20210703102553-04e82d2a986a/go.mod h1:Y2qYZcBWXNFjhdavD1osx/9uBLnKuim0Wdy2hfe9oPw=
-github.com/TheArcadiaGroup/fironeutrino v0.12.2-0.20210703110630-525001182da8 h1:vIJlmdkszwBMElEPmG8QYb6bVHGzVRIid3mQR50LHlQ=
-github.com/TheArcadiaGroup/fironeutrino v0.12.2-0.20210703110630-525001182da8/go.mod h1:97rZsyyKJYJaQGwXO38DoXWNFH3ujBKgs1z2w3snrUk=
+github.com/TheArcadiaGroup/fironeutrino v0.12.2-0.20210703112507-aadf665ab303 h1:EjOFU/W1SuyNiGiBAhh3nJ+jxWBgN2VCT0CP7fH5i6M=
+github.com/TheArcadiaGroup/fironeutrino v0.12.2-0.20210703112507-aadf665ab303/go.mod h1:ysaQYiAQD3IzeX1AiIsgvdrtt5R64mpi5j80RFPKTEY=
 github.com/TheArcadiaGroup/firoutil v1.0.3-0.20210702095605-a0d7cd6d467d/go.mod h1:onyUUPeRVZYIUrBQWowrYMfZ1FJahm8BL1SoBMJUKmU=
 github.com/TheArcadiaGroup/firoutil v1.0.3-0.20210702100639-9a4ce93bc530/go.mod h1:2UnpqqQeSkcrhORV3NmVMN9bRbJPxclVoM+8LN2BQQ8=
 github.com/TheArcadiaGroup/firoutil v1.0.3-0.20210702105910-69b409908efe/go.mod h1:O6x2qmYfYMQZ4nRmEQ2yZWgkZU4OCIhDK1v14YhTMeA=
