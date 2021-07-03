@@ -11,7 +11,7 @@ import (
 	"github.com/TheArcadiaGroup/firod/rpcclient"
 	"github.com/TheArcadiaGroup/firod/txscript"
 	"github.com/TheArcadiaGroup/firod/wire"
-	"github.com/TheArcadiaGroup/fironeutrino"
+	fironeutrino "github.com/TheArcadiaGroup/fironeutrino"
 	"github.com/TheArcadiaGroup/fironeutrino/headerfs"
 	btcutil "github.com/TheArcadiaGroup/firoutil"
 	"github.com/TheArcadiaGroup/firoutil/gcs"

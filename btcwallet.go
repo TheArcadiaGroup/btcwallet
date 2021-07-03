@@ -14,7 +14,7 @@ import (
 	"runtime"
 	"sync"
 
-	"github.com/TheArcadiaGroup/fironeutrino"
+	fironeutrino "github.com/TheArcadiaGroup/fironeutrino"
 	"github.com/TheArcadiaGroup/firowallet/chain"
 	"github.com/TheArcadiaGroup/firowallet/rpc/legacyrpc"
 	"github.com/TheArcadiaGroup/firowallet/wallet"

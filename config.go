@@ -17,7 +17,7 @@ import (
 	"time"
 
 	"github.com/TheArcadiaGroup/firod/chaincfg"
-	"github.com/TheArcadiaGroup/fironeutrino"
+	fironeutrino "github.com/TheArcadiaGroup/fironeutrino"
 	btcutil "github.com/TheArcadiaGroup/firoutil"
 	"github.com/TheArcadiaGroup/firowallet/internal/cfgutil"
 	"github.com/TheArcadiaGroup/firowallet/internal/legacy/keystore"
