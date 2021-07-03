@@ -3,7 +3,7 @@ module github.com/TheArcadiaGroup/firowallet/wallet/txsizes
 go 1.12
 
 require (
-	github.com/TheArcadiaGroup/firod v0.22.0-beta.0.20210702110135-615d55a6af67
+	github.com/TheArcadiaGroup/firod v0.22.0-beta.0.20210703102553-04e82d2a986a
 	github.com/kr/pretty v0.1.0 // indirect
 	golang.org/x/sync v0.0.0-20181221193216-37e7f081c4d4 // indirect
 	golang.org/x/sys v0.0.0-20190904154756-749cb33beabd // indirect

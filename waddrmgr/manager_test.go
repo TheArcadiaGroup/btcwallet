@@ -16,7 +16,7 @@ import (
 
 	"github.com/TheArcadiaGroup/firod/chaincfg"
 	"github.com/TheArcadiaGroup/firod/chaincfg/chainhash"
-	"github.com/TheArcadiaGroup/firoutil"
+	btcutil "github.com/TheArcadiaGroup/firoutil"
 	"github.com/TheArcadiaGroup/firoutil/hdkeychain"
 	"github.com/TheArcadiaGroup/firowallet/snacl"
 	"github.com/TheArcadiaGroup/firowallet/walletdb"

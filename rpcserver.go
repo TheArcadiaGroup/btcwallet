@@ -16,7 +16,7 @@ import (
 	"strings"
 	"time"
 
-	"github.com/TheArcadiaGroup/firoutil"
+	btcutil "github.com/TheArcadiaGroup/firoutil"
 	"github.com/TheArcadiaGroup/firowallet/rpc/legacyrpc"
 	"github.com/TheArcadiaGroup/firowallet/rpc/rpcserver"
 	"github.com/TheArcadiaGroup/firowallet/wallet"

@@ -11,7 +11,7 @@ import (
 	"path/filepath"
 	"time"
 
-	"github.com/TheArcadiaGroup/firoutil"
+	btcutil "github.com/TheArcadiaGroup/firoutil"
 	"github.com/TheArcadiaGroup/firowallet/wallet"
 	"github.com/TheArcadiaGroup/firowallet/walletdb"
 	_ "github.com/TheArcadiaGroup/firowallet/walletdb/bdb"

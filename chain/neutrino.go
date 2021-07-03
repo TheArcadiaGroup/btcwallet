@@ -11,23 +11,23 @@ import (
 	"github.com/TheArcadiaGroup/firod/rpcclient"
 	"github.com/TheArcadiaGroup/firod/txscript"
 	"github.com/TheArcadiaGroup/firod/wire"
-	"github.com/TheArcadiaGroup/firoutil"
+	"github.com/TheArcadiaGroup/fironeutrino"
+	"github.com/TheArcadiaGroup/fironeutrino/headerfs"
+	btcutil "github.com/TheArcadiaGroup/firoutil"
 	"github.com/TheArcadiaGroup/firoutil/gcs"
 	"github.com/TheArcadiaGroup/firoutil/gcs/builder"
 	"github.com/TheArcadiaGroup/firowallet/waddrmgr"
 	"github.com/TheArcadiaGroup/firowallet/wtxmgr"
-	"github.com/lightninglabs/neutrino"
-	"github.com/lightninglabs/neutrino/headerfs"
 )
 
 // NeutrinoClient is an implementation of the btcwalet chain.Interface interface.
 type NeutrinoClient struct {
-	CS *neutrino.ChainService
+	CS *fironeutrino.ChainService
 
 	chainParams *chaincfg.Params
 
 	// We currently support one rescan/notifiction goroutine per client
-	rescan *neutrino.Rescan
+	rescan *fironeutrino.Rescan
 
 	enqueueNotification     chan interface{}
 	dequeueNotification     chan interface{}
@@ -51,7 +51,7 @@ type NeutrinoClient struct {
 // NewNeutrinoClient creates a new NeutrinoClient struct with a backing
 // ChainService.
 func NewNeutrinoClient(chainParams *chaincfg.Params,
-	chainService *neutrino.ChainService) *NeutrinoClient {
+	chainService *fironeutrino.ChainService) *NeutrinoClient {
 
 	return &NeutrinoClient{
 		CS:          chainService,
@@ -61,7 +61,7 @@ func NewNeutrinoClient(chainParams *chaincfg.Params,
 
 // BackEnd returns the name of the driver.
 func (s *NeutrinoClient) BackEnd() string {
-	return "neutrino"
+	return "fironeutrino"
 }
 
 // Start replicates the RPC client's Start method.
@@ -321,7 +321,7 @@ func (s *NeutrinoClient) pollCFilter(hash *chainhash.Hash) (*gcs.Filter, error) 
 		}
 
 		filter, err = s.CS.GetCFilter(
-			*hash, wire.GCSFilterRegular, neutrino.OptimisticBatch(),
+			*hash, wire.GCSFilterRegular, fironeutrino.OptimisticBatch(),
 		)
 		if err != nil {
 			count++
@@ -397,34 +397,34 @@ func (s *NeutrinoClient) Rescan(startHash *chainhash.Hash, addrs []btcutil.Addre
 		}
 	}
 
-	var inputsToWatch []neutrino.InputWithScript
+	var inputsToWatch []fironeutrino.InputWithScript
 	for op, addr := range outPoints {
 		addrScript, err := txscript.PayToAddrScript(addr)
 		if err != nil {
 			return err
 		}
 
-		inputsToWatch = append(inputsToWatch, neutrino.InputWithScript{
+		inputsToWatch = append(inputsToWatch, fironeutrino.InputWithScript{
 			OutPoint: op,
 			PkScript: addrScript,
 		})
 	}
 
 	s.clientMtx.Lock()
-	newRescan := neutrino.NewRescan(
-		&neutrino.RescanChainSource{
+	newRescan := fironeutrino.NewRescan(
+		&fironeutrino.RescanChainSource{
 			ChainService: s.CS,
 		},
-		neutrino.NotificationHandlers(rpcclient.NotificationHandlers{
+		fironeutrino.NotificationHandlers(rpcclient.NotificationHandlers{
 			OnBlockConnected:         s.onBlockConnected,
 			OnFilteredBlockConnected: s.onFilteredBlockConnected,
 			OnBlockDisconnected:      s.onBlockDisconnected,
 		}),
-		neutrino.StartBlock(&headerfs.BlockStamp{Hash: *startHash}),
-		neutrino.StartTime(s.startTime),
-		neutrino.QuitChan(s.rescanQuit),
-		neutrino.WatchAddrs(addrs...),
-		neutrino.WatchInputs(inputsToWatch...),
+		fironeutrino.StartBlock(&headerfs.BlockStamp{Hash: *startHash}),
+		fironeutrino.StartTime(s.startTime),
+		fironeutrino.QuitChan(s.rescanQuit),
+		fironeutrino.WatchAddrs(addrs...),
+		fironeutrino.WatchInputs(inputsToWatch...),
 	)
 	s.rescan = newRescan
 	s.rescanErr = s.rescan.Start()
@@ -454,7 +454,7 @@ func (s *NeutrinoClient) NotifyReceived(addrs []btcutil.Address) error {
 	// addresses to the watch list.
 	if s.scanning {
 		s.clientMtx.Unlock()
-		return s.rescan.Update(neutrino.AddAddrs(addrs...))
+		return s.rescan.Update(fironeutrino.AddAddrs(addrs...))
 	}
 
 	s.rescanQuit = make(chan struct{})
@@ -466,18 +466,18 @@ func (s *NeutrinoClient) NotifyReceived(addrs []btcutil.Address) error {
 	s.lastFilteredBlockHeader = nil
 
 	// Rescan with just the specified addresses.
-	newRescan := neutrino.NewRescan(
-		&neutrino.RescanChainSource{
+	newRescan := fironeutrino.NewRescan(
+		&fironeutrino.RescanChainSource{
 			ChainService: s.CS,
 		},
-		neutrino.NotificationHandlers(rpcclient.NotificationHandlers{
+		fironeutrino.NotificationHandlers(rpcclient.NotificationHandlers{
 			OnBlockConnected:         s.onBlockConnected,
 			OnFilteredBlockConnected: s.onFilteredBlockConnected,
 			OnBlockDisconnected:      s.onBlockDisconnected,
 		}),
-		neutrino.StartTime(s.startTime),
-		neutrino.QuitChan(s.rescanQuit),
-		neutrino.WatchAddrs(addrs...),
+		fironeutrino.StartTime(s.startTime),
+		fironeutrino.QuitChan(s.rescanQuit),
+		fironeutrino.WatchAddrs(addrs...),
 	)
 	s.rescan = newRescan
 	s.rescanErr = s.rescan.Start()

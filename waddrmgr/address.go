@@ -10,7 +10,7 @@ import (
 	"sync"
 
 	"github.com/TheArcadiaGroup/firod/btcec"
-	"github.com/TheArcadiaGroup/firoutil"
+	btcutil "github.com/TheArcadiaGroup/firoutil"
 	"github.com/TheArcadiaGroup/firoutil/hdkeychain"
 	"github.com/TheArcadiaGroup/firowallet/internal/zero"
 	"github.com/TheArcadiaGroup/firowallet/walletdb"

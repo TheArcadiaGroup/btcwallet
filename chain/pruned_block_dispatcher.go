@@ -16,8 +16,8 @@ import (
 	"github.com/TheArcadiaGroup/firod/chaincfg/chainhash"
 	"github.com/TheArcadiaGroup/firod/peer"
 	"github.com/TheArcadiaGroup/firod/wire"
-	"github.com/TheArcadiaGroup/firoutil"
-	"github.com/lightninglabs/neutrino/query"
+	"github.com/TheArcadiaGroup/fironeutrino/query"
+	btcutil "github.com/TheArcadiaGroup/firoutil"
 	"github.com/lightningnetwork/lnd/ticker"
 )
 

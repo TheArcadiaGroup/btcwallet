@@ -14,11 +14,11 @@ import (
 	"runtime"
 	"sync"
 
+	"github.com/TheArcadiaGroup/fironeutrino"
 	"github.com/TheArcadiaGroup/firowallet/chain"
 	"github.com/TheArcadiaGroup/firowallet/rpc/legacyrpc"
 	"github.com/TheArcadiaGroup/firowallet/wallet"
 	"github.com/TheArcadiaGroup/firowallet/walletdb"
-	"github.com/lightninglabs/neutrino"
 )
 
 var (
@@ -158,21 +158,21 @@ func rpcClientConnectLoop(legacyRPCServer *legacyrpc.Server, loader *wallet.Load
 
 		if cfg.UseSPV {
 			var (
-				chainService *neutrino.ChainService
+				chainService *fironeutrino.ChainService
 				spvdb        walletdb.DB
 			)
 			netDir := networkDir(cfg.AppDataDir.Value, activeNet.Params)
 			spvdb, err = walletdb.Create(
-				"bdb", filepath.Join(netDir, "neutrino.db"),
+				"bdb", filepath.Join(netDir, "fironeutrino.db"),
 				true, cfg.DBTimeout,
 			)
 			if err != nil {
-				log.Errorf("Unable to create Neutrino DB: %s", err)
+				log.Errorf("Unable to create fironeutrino DB: %s", err)
 				continue
 			}
 			defer spvdb.Close()
-			chainService, err = neutrino.NewChainService(
-				neutrino.Config{
+			chainService, err = fironeutrino.NewChainService(
+				fironeutrino.Config{
 					DataDir:      netDir,
 					Database:     spvdb,
 					ChainParams:  *activeNet.Params,

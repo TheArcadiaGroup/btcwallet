@@ -17,13 +17,13 @@ import (
 	"time"
 
 	"github.com/TheArcadiaGroup/firod/chaincfg"
-	"github.com/TheArcadiaGroup/firoutil"
+	"github.com/TheArcadiaGroup/fironeutrino"
+	btcutil "github.com/TheArcadiaGroup/firoutil"
 	"github.com/TheArcadiaGroup/firowallet/internal/cfgutil"
 	"github.com/TheArcadiaGroup/firowallet/internal/legacy/keystore"
 	"github.com/TheArcadiaGroup/firowallet/netparams"
 	"github.com/TheArcadiaGroup/firowallet/wallet"
 	flags "github.com/jessevdk/go-flags"
-	"github.com/lightninglabs/neutrino"
 )
 
 const (
@@ -274,9 +274,9 @@ func loadConfig() (*config, []string, error) {
 		UseSPV:                 false,
 		AddPeers:               []string{},
 		ConnectPeers:           []string{},
-		MaxPeers:               neutrino.MaxPeers,
-		BanDuration:            neutrino.BanDuration,
-		BanThreshold:           neutrino.BanThreshold,
+		MaxPeers:               fironeutrino.MaxPeers,
+		BanDuration:            fironeutrino.BanDuration,
+		BanThreshold:           fironeutrino.BanThreshold,
 		DBTimeout:              wallet.DefaultDBTimeout,
 	}
 
@@ -546,9 +546,9 @@ func loadConfig() (*config, []string, error) {
 	}
 
 	if cfg.UseSPV {
-		neutrino.MaxPeers = cfg.MaxPeers
-		neutrino.BanDuration = cfg.BanDuration
-		neutrino.BanThreshold = cfg.BanThreshold
+		fironeutrino.MaxPeers = cfg.MaxPeers
+		fironeutrino.BanDuration = cfg.BanDuration
+		fironeutrino.BanThreshold = cfg.BanThreshold
 	} else {
 		if cfg.RPCConnect == "" {
 			cfg.RPCConnect = net.JoinHostPort("localhost", activeNet.RPCClientPort)

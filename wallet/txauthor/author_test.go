@@ -8,7 +8,7 @@ import (
 	"testing"
 
 	"github.com/TheArcadiaGroup/firod/wire"
-	"github.com/TheArcadiaGroup/firoutil"
+	btcutil "github.com/TheArcadiaGroup/firoutil"
 	"github.com/TheArcadiaGroup/firowallet/wallet/txrules"
 	"github.com/TheArcadiaGroup/firowallet/wallet/txsizes"
 )

@@ -8,7 +8,7 @@ import (
 	"github.com/TheArcadiaGroup/firod/btcec"
 	"github.com/TheArcadiaGroup/firod/chaincfg"
 	"github.com/TheArcadiaGroup/firod/wire"
-	"github.com/TheArcadiaGroup/firoutil"
+	btcutil "github.com/TheArcadiaGroup/firoutil"
 	"github.com/TheArcadiaGroup/firoutil/hdkeychain"
 	"github.com/TheArcadiaGroup/firowallet/internal/zero"
 	"github.com/TheArcadiaGroup/firowallet/netparams"

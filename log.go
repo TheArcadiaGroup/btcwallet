@@ -11,6 +11,7 @@ import (
 	"path/filepath"
 
 	"github.com/TheArcadiaGroup/firod/rpcclient"
+	"github.com/TheArcadiaGroup/fironeutrino"
 	"github.com/TheArcadiaGroup/firowallet/chain"
 	"github.com/TheArcadiaGroup/firowallet/rpc/legacyrpc"
 	"github.com/TheArcadiaGroup/firowallet/rpc/rpcserver"
@@ -18,7 +19,6 @@ import (
 	"github.com/TheArcadiaGroup/firowallet/wtxmgr"
 	"github.com/btcsuite/btclog"
 	"github.com/jrick/logrotate/rotator"
-	"github.com/lightninglabs/neutrino"
 )
 
 // logWriter implements an io.Writer that outputs to both standard output and
@@ -70,7 +70,7 @@ func init() {
 	rpcclient.UseLogger(chainLog)
 	rpcserver.UseLogger(grpcLog)
 	legacyrpc.UseLogger(legacyRPCLog)
-	neutrino.UseLogger(btcnLog)
+	fironeutrino.UseLogger(btcnLog)
 }
 
 // subsystemLoggers maps each subsystem identifier to its associated logger.

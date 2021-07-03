@@ -9,7 +9,7 @@ import (
 	"errors"
 
 	"github.com/TheArcadiaGroup/firod/txscript"
-	"github.com/TheArcadiaGroup/firoutil"
+	btcutil "github.com/TheArcadiaGroup/firoutil"
 	"github.com/TheArcadiaGroup/firowallet/waddrmgr"
 	"github.com/TheArcadiaGroup/firowallet/walletdb"
 )

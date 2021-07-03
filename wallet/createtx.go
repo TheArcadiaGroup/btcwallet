@@ -11,7 +11,7 @@ import (
 	"github.com/TheArcadiaGroup/firod/btcec"
 	"github.com/TheArcadiaGroup/firod/txscript"
 	"github.com/TheArcadiaGroup/firod/wire"
-	"github.com/TheArcadiaGroup/firoutil"
+	btcutil "github.com/TheArcadiaGroup/firoutil"
 	"github.com/TheArcadiaGroup/firowallet/waddrmgr"
 	"github.com/TheArcadiaGroup/firowallet/wallet/txauthor"
 	"github.com/TheArcadiaGroup/firowallet/wallet/txsizes"

@@ -8,7 +8,7 @@ import (
 	"github.com/TheArcadiaGroup/firowallet/walletdb"
 	"github.com/TheArcadiaGroup/firowallet/wtxmgr"
 
-	"github.com/TheArcadiaGroup/firoutil"
+	btcutil "github.com/TheArcadiaGroup/firoutil"
 )
 
 var (

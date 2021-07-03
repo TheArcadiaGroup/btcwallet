@@ -12,7 +12,7 @@ import (
 	"github.com/TheArcadiaGroup/firod/blockchain"
 	"github.com/TheArcadiaGroup/firod/chaincfg/chainhash"
 	"github.com/TheArcadiaGroup/firod/wire"
-	"github.com/TheArcadiaGroup/firoutil"
+	btcutil "github.com/TheArcadiaGroup/firoutil"
 )
 
 // conn mocks a network connection by implementing the net.Conn interface. It is
